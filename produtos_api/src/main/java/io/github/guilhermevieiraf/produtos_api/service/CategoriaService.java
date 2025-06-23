@@ -27,8 +27,12 @@ public class CategoriaService {
         categoriaRepository.save(categoria);
     }
 
-    public void deletar(Categoria categoria) {
-        categoriaRepository.delete(categoria);
+    // @Transactional
+    public void deletar(UUID id) {
+        if (!categoriaRepository.existsById(id)) {
+            throw new IllegalArgumentException("Categoria com ID " + id + " não encontrada para deleção.");
+        }
+        categoriaRepository.deleteById(id);
     }
 
     public Optional<Categoria> buscarPorId(UUID id) {
